@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410593003140",
+    "project_id": "chessgame-baede",
+    "storage_bucket": "chessgame-baede.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410593003140:android:942c3901709ad2311424d1",
+        "android_client_info": {
+          "package_name": "com.example.chessgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3FdNcIVqRe5GNYqzbWT-3Kygq_zlGZQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
