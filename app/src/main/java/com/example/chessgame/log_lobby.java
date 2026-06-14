@@ -14,10 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class log_lobby extends AppCompatActivity implements View.OnClickListener {
 
+    //fields
     ImageButton loginbtn;
     ImageButton signinbtn;
 
-
+    //constructor
     @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class log_lobby extends AppCompatActivity implements View.OnClickListener
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+    //find buttons
     loginbtn = findViewById(R.id.loginbtn);
     loginbtn.setOnClickListener(this);
 
@@ -41,6 +42,8 @@ public class log_lobby extends AppCompatActivity implements View.OnClickListener
 
     }
 
+
+    //move to screen by the press of a button
     @Override
     public void onClick(View v) {
 

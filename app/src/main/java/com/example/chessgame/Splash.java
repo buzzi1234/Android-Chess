@@ -2,8 +2,8 @@ package com.example.chessgame;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler; // <-- Import Handler
-import android.os.Looper; // <-- Import Looper for modern Handler
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,22 +26,18 @@ public class Splash extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // --- FIX: Use Handler for a cleaner delay and run on the Main Thread ---
-        // This is a safer and more standard way to implement a simple delay.
+        //run the splash intent for three sec
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                // The target activity must exist and be declared in the manifest.
-                // It is assumed the class name is 'log_lobby.class' exactly as you wrote it.
+
                 Intent intent = new Intent(Splash.this, log_lobby.class);
                 startActivity(intent);
 
-                // --- FIX: Add finish() so the user can't navigate back to the splash screen ---
                 finish();
             }
         }, SPLASH_DELAY_MS);
 
-        // Removed the unnecessary and complex 'Thread' implementation.
+
     }
 }

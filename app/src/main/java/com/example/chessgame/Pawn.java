@@ -1,11 +1,14 @@
 package com.example.chessgame;
 
-public class Pawn extends Piece{
+import static java.lang.Math.abs;
 
+public class Pawn extends Piece {
+
+    //field
     private int m_jumps;
 
-    public Pawn(Point startIndex, char color, char type)
-    {
+    //constructor
+    public Pawn(Point startIndex, char color, char type) {
         this.m_jumps = Constants.PAWN_JUMPS;
         super.setStartIndex(startIndex);
         super.setEndIndex(startIndex);
@@ -13,158 +16,116 @@ public class Pawn extends Piece{
         super.setType(type);
     }
 
-    public void destroy()
-    {
+    //destructor
+    public void destroy() {
         this.m_jumps = 0;
         super.destroy();
     }
 
-    public boolean turnPiece(char type)
-    {
-        if (type == Constants.QUEEN)
-        {
-            super.setType(Constants.QUEEN);
-        }
-        else if (type == Constants.ROOK)
-        {
-            super.setType(Constants.ROOK);
-        }
-        else if (type == Constants.BISHOP)
-        {
-            super.setType(Constants.BISHOP);
-        }
-        else if (type == Constants.KNIGHT)
-        {
-            super.setType(Constants.KNIGHT);
-        }
-        else
-        {
+    //check if the pawn can be moved one or two up or down
+    @Override
+    public boolean move(char color, Piece[][] board) {
+        int startRow = getStartIndex().getRow();
+        int startCol = getStartIndex().getCol();
+        int endRow = getEndIndex().getRow();
+        int endCol = getEndIndex().getCol();
+
+        // Straight movement must land on an empty square
+        if (board[endRow][endCol] != null) {
             return false;
         }
-        return true;
-    }
 
-    public boolean firstMove(char color, Piece[][] board)
-    {
-        switch (color)
-        {
-            case Constants.BLACK_PIECE:
-                if (getStartIndex().getRow() == Constants.ROW_START_BLACK)
-                {
-                    if (inTheWay(color, board))
-                    {
-                        this.m_jumps = Constants.DOUBLE_JUMP;
-                        if (inTheWay(color, board))
-                        {
-                            this.m_jumps = Constants.PAWN_JUMPS;
-                            return true;
-                        }
-                        this.m_jumps = Constants.PAWN_JUMPS;
-                    }
-                }
-                break;
-            case Constants.WHITE_PIECE:
-                if (getStartIndex().getRow() == Constants.ROW_START_WHITE)
-                {
-                    if (inTheWay(color, board))
-                    {
-                        this.m_jumps = Constants.DOUBLE_JUMP;
-                        if (inTheWay(color, board))
-                        {
-                            this.m_jumps = Constants.PAWN_JUMPS;
-                            return true;
-                        }
-                        this.m_jumps = Constants.PAWN_JUMPS;
-                    }
-                }
-                break;
-            default:
-                return false;
+        // Straight movement cannot change columns
+        if (startCol != endCol) {
+            return false;
+        }
+
+        // Check the path using the corrected inTheWay logic
+        if (!inTheWay(color, board)) {
+            return false; // Something is blocking the path forward
+        }
+
+        // Validate the exact step length allowed based on color direction
+        if (color == Constants.WHITE_PIECE) {
+            // White moves down (increasing rows): either 1 step, or 2 steps from starting row (row 1)
+            if (endRow == startRow + 1) {
+                return true;
+            }
+            if (startRow == 1 && endRow == 3) {
+                return true;
+            }
+        } else {
+            // Black moves up (decreasing rows): either 1 step, or 2 steps from starting row (row 6)
+            if (endRow == startRow - 1) {
+                return true;
+            }
+            if (startRow == 6 && endRow == 4) {
+                return true;
+            }
         }
 
         return false;
-
     }
 
-    @Override
-    public boolean move(char color, Piece[][] board)
-    {
-        switch (getColor())
-        {
-            case Constants.BLACK_PIECE:
-                //Eating diagonally to the left
-                if ((getStartIndex().getCol() - Constants.PAWN_JUMPS == getEndIndex().getCol()) && (getStartIndex().getRow() - Constants.PAWN_JUMPS == getEndIndex().getRow()))
-                {
-                    return eat(color, board);
-                }
-                //Eating diagonally to the right
-                if ((getStartIndex().getCol() + Constants.PAWN_JUMPS == getEndIndex().getCol()) && (getStartIndex().getRow() - Constants.PAWN_JUMPS == getEndIndex().getRow()))
-                {
-                    return eat(color, board);
-                }
-                //walking one step
-                if (getStartIndex().getRow() - Constants.PAWN_JUMPS == getEndIndex().getRow())
-                {
-                    return inTheWay(color, board);
-                }
-                //Walking for the first time two steps
-                if (getStartIndex().getRow() - Constants.DOUBLE_JUMP == getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
-                {
-                    return firstMove(color, board);
-                }
-                break;
-            case Constants.WHITE_PIECE:
-                //Eating diagonally to the left
-                if ((getStartIndex().getCol() - Constants.PAWN_JUMPS == getEndIndex().getCol()) && (getStartIndex().getRow() + Constants.PAWN_JUMPS == getEndIndex().getRow()))
-                {
-                    return eat(color, board);
-                }
-                //Eating diagonally to the right
-                if ((getStartIndex().getCol() + Constants.PAWN_JUMPS == getEndIndex().getCol()) && (getStartIndex().getRow() + Constants.PAWN_JUMPS == getEndIndex().getRow()))
-                {
-                    return eat(color, board);
-                }
-                //walking one step
-                if (getStartIndex().getRow() + Constants.PAWN_JUMPS == getEndIndex().getRow())
-                {
-                    return inTheWay(color, board);
-                }
-                //Walking for the first time two steps
-                if (getStartIndex().getRow() + Constants.DOUBLE_JUMP == getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
-                {
-                    return firstMove(color, board);
-                }
-                break;
-            default:
-                return false;
-        }
-
-        return false;
-
-    }
-
+    //the func checks if the pawn can eat diagonal
     @Override
     public boolean eat(char color, Piece[][] board) {
-        Piece target = board[getEndIndex().getRow()][getEndIndex().getCol()];
-        if (target == null) return false; // Cannot eat an empty square
-        return target.getColor() != color;
-    }
-    @Override
-    public boolean inTheWay(char color, Piece[][] board) {
-        int row = getStartIndex().getRow();
-        int col = getStartIndex().getCol();
-        int direction = (color == Constants.BLACK_PIECE) ? -1 : 1;
+        int startRow = getStartIndex().getRow();
+        int startCol = getStartIndex().getCol();
+        int endRow = getEndIndex().getRow();
+        int endCol = getEndIndex().getCol();
 
-        // Use a safe check for null
-        Piece pieceInFront = board[row + direction][col];
-        if (pieceInFront != null) {
-            // There is a piece in front, so the path is NOT clear
+        Piece target = board[endRow][endCol];
+
+        // To capture, there must be an enemy piece sitting on the target square
+        if (target == null || target.getColor() == color) {
             return false;
         }
 
-        // Path is clear
+        int rowDiff = endRow - startRow;
+        int colDiff = abs(endCol - startCol);
+
+        // Capturing must be exactly 1 square diagonally
+        if (colDiff != 1) {
+            return false;
+        }
+
+        if (color == Constants.WHITE_PIECE) {
+            return rowDiff == 1;  // White captures moving down
+        } else {
+            return rowDiff == -1; // Black captures moving up
+        }
+    }
+
+    //the func checks if there is a player in the way of the pawn moves
+    @Override
+    public boolean inTheWay(char color, Piece[][] board) {
+        int startRow = getStartIndex().getRow();
+        int startCol = getStartIndex().getCol();
+        int endRow = getEndIndex().getRow();
+
+        // If moving 2 squares, check the intermediate square right in front of the pawn
+        if (abs(endRow - startRow) == 2) {
+            int direction = (color == Constants.WHITE_PIECE) ? 1 : -1;
+            int intermediateRow = startRow + direction;
+
+            // If the intermediate square is occupied, path is blocked
+            if (board[intermediateRow][startCol] != null) {
+                return false;
+            }
+        }
+
+        // Path is completely clear
         return true;
     }
 
-
+    //the func turn the piece type to a queen rook bishop or knight
+    public boolean turnPiece(char type) {
+        if (type == Constants.QUEEN)       super.setType(Constants.QUEEN);
+        else if (type == Constants.ROOK)   super.setType(Constants.ROOK);
+        else if (type == Constants.BISHOP) super.setType(Constants.BISHOP);
+        else if (type == Constants.KNIGHT) super.setType(Constants.KNIGHT);
+        else return false;
+        return true;
+    }
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/eggshell_bg"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pawn Promotion"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#0E0E1A"
+        android:layout_marginBottom="24dp"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:alignmentMode="alignBounds">
+
+        <ImageButton
+            android:id="@+id/img_btn_queen"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:contentDescription="Queen"
+            />
+
+        <ImageButton
+            android:id="@+id/img_btn_rook"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:contentDescription="Rook"
+            />
+
+        <ImageButton
+            android:id="@+id/img_btn_knight"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:contentDescription="Knight"
+            />
+
+
+
+        <ImageButton
+            android:id="@+id/img_btn_bishop"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="12dp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:contentDescription="Bishop"
+            />
+
+    </GridLayout>
+</LinearLayout>

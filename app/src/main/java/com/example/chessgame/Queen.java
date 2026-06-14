@@ -1,77 +1,73 @@
 package com.example.chessgame;
 
-import static java.lang.Math.abs;
-
 public class Queen extends Piece {
 
-    Rook m_rook;
-    Bishop m_bishop;
-    public Queen(Point startIndex, char color, char type)
-    {
-        this.m_rook = new Rook(startIndex,color, Constants.ROOK);
-        this.m_bishop = new Bishop(startIndex,color, Constants.BISHOP);
+    //fields
+    private final Rook m_rook;
+    private final Bishop m_bishop;
+
+    //constructor
+    public Queen(Point startIndex, char color, char type) {
+        this.m_rook = new Rook(new Point(startIndex.getRow(), startIndex.getCol()), color, Constants.ROOK);
+        this.m_bishop = new Bishop(new Point(startIndex.getRow(), startIndex.getCol()), color, Constants.BISHOP);
         super.setStartIndex(startIndex);
         super.setEndIndex(startIndex);
         super.setColor(color);
         super.setType(type);
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
-    @Override
-    public boolean move(char color, Piece[][] board)
-    {
-        if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol()))
-        {
-            this.m_bishop.setStartIndex(getStartIndex());
-            this.m_bishop.setEndIndex(getEndIndex());
-            return this.m_bishop.move(color, board);
-        }
-        else if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol())
-        {
-            this.m_rook.setStartIndex(getStartIndex());
-            this.m_rook.setEndIndex(getEndIndex());
-            return this.m_bishop.move(color, board);
-        }
+    //This func sync the pieces points
+    private void syncSubPieces() {
+        // Pass brand new Point objects so mutations don't alter shared data structures
+        Point currentStart = new Point(getStartIndex().getRow(), getStartIndex().getCol());
+        Point currentEnd = new Point(getEndIndex().getRow(), getEndIndex().getCol());
 
+        m_rook.setStartIndex(currentStart);
+        m_rook.setEndIndex(currentEnd);
+
+        m_bishop.setStartIndex(currentStart);
+        m_bishop.setEndIndex(currentEnd);
+    }
+
+    //this func checks if the queen can move diagonal or in straight line
+    @Override
+    public boolean move(char color, Piece[][] board) {
+        syncSubPieces();
+
+        // Diagonal check
+        if (Math.abs(getEndIndex().getRow() - getStartIndex().getRow()) == Math.abs(getEndIndex().getCol() - getStartIndex().getCol())) {
+            return m_bishop.move(color, board);
+        }
+        // Straight line check
+        else if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol()) {
+            return m_rook.move(color, board);
+        }
         return false;
-
     }
 
+    //this func checks if the queen can eat diagonal or in straight line
     @Override
     public boolean eat(char color, Piece[][] board) {
-        if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol())) {
-            m_bishop.setStartIndex(getStartIndex());
-            m_bishop.setEndIndex(getEndIndex());
+        syncSubPieces();
+
+        if (Math.abs(getEndIndex().getRow() - getStartIndex().getRow()) == Math.abs(getEndIndex().getCol() - getStartIndex().getCol())) {
             return m_bishop.eat(color, board);
         } else if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol()) {
-            m_rook.setStartIndex(getStartIndex());
-            m_rook.setEndIndex(getEndIndex());
-            // FIX: Change m_bishop to m_rook here!
             return m_rook.eat(color, board);
         }
         return false;
     }
+
+    //this func checks if the queen have any pieces int the way  diagonal or in straight line
     @Override
-    public boolean inTheWay(char color, Piece[][] board)
-    {
-        if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol()))
-        {
-            this.m_bishop.setStartIndex(getStartIndex());
-            this.m_bishop.setEndIndex(getEndIndex());
-            return this.m_bishop.inTheWay(color, board);
-        }
-        else if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol())
-        {
-            this.m_rook.setStartIndex(getStartIndex());
-            this.m_rook.setEndIndex(getEndIndex());
-            return this.m_rook.inTheWay(color, board);
-        }
+    public boolean inTheWay(char color, Piece[][] board) {
+        syncSubPieces();
 
+        if (Math.abs(getEndIndex().getRow() - getStartIndex().getRow()) == Math.abs(getEndIndex().getCol() - getStartIndex().getCol())) {
+            return m_bishop.inTheWay(color, board);
+        } else if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol()) {
+            return m_rook.inTheWay(color, board);
+        }
         return false;
-
     }
-
 }

@@ -2,12 +2,9 @@ package com.example.chessgame;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +16,7 @@ public class instructionPage extends AppCompatActivity implements View.OnClickLi
 
     ImageButton backbtn;
 
+    //constructor
     @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +29,14 @@ public class instructionPage extends AppCompatActivity implements View.OnClickLi
             return insets;
         });
 
+        //find the button
         backbtn = findViewById(R.id.backbtn);
         backbtn.setOnClickListener(this);
 
 
     }
 
+    //The func make the back button work by set the intent to the lobby
     @Override
     public void onClick(View v) {
 

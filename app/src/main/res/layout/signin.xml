@@ -4,19 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/sign"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/lobby">
 
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="411dp"
-        android:layout_height="739dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/lobby" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -65,32 +56,31 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737"
+        app:layout_constraintVertical_bias="0.7"
         app:srcCompat="@drawable/coolersignbtn" />
 
     <EditText
         android:id="@+id/emailtv"
-        android:layout_width="121dp"
-        android:layout_height="29dp"
+        android:layout_width="135dp"
+        android:layout_height="37dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.437" />
+        app:layout_constraintVertical_bias="0.43" />
 
     <EditText
         android:id="@+id/passwordtv"
-        android:layout_width="121dp"
-        android:layout_height="29dp"
+        android:layout_width="131dp"
+        android:layout_height="41dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.581" />
@@ -102,12 +92,12 @@
         android:fontFamily="sans-serif-black"
         android:text="Enter Email"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintVertical_bias="0.386" />
 
     <TextView
         android:id="@+id/textView6"
@@ -116,12 +106,12 @@
         android:fontFamily="sans-serif-black"
         android:text="Enter Password"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintVertical_bias="0.531" />
 
     <ImageButton
         android:id="@+id/backbtn"

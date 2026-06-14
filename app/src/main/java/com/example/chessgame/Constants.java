@@ -16,17 +16,7 @@ public class Constants {
     public static final int ROW_START_BLACK = 6;
     public static final int ROW_START_WHITE = 1;
     public static final int DOUBLE_JUMP  = 2;
-    public static final int EMPTY_INDEX  = -1;
     public static final int DIF_ROW  = 1;
     public static final int DIF_COL  = 1;
-    public static final char PLACE_A = 'a';
-    public static final char PLACE_B = 'b';
-    public static final char PLACE_C = 'c';
-    public static final char PLACE_D = 'd';
-    public static final char PLACE_E = 'e';
-    public static final char PLACE_F = 'f';
-    public static final char PLACE_G = 'g';
-    public static final char PLACE_H = 'h';
-    public static final String FRONTEND_MSG = "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1";
-
+    public static final String FRONTEND_MSG = "rnbkqbnrpppppppp00000000000000000000000000000000PPPPPPPPRNBKQBNR";
 }

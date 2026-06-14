@@ -1,50 +1,51 @@
 package com.example.chessgame;
 
-import static java.lang.Math.abs;
-
 public class Knight extends Piece {
-    public Knight(Point startIndex, char color, char type)
-    {
+    //constructor
+    public Knight(Point startIndex, char color, char type) {
         super.setStartIndex(startIndex);
         super.setEndIndex(startIndex);
         super.setColor(color);
         super.setType(type);
     }
 
+    //check just if the endpoint is valid
     @Override
-    public void destroy() {
-        super.destroy();
+    public boolean move(char color, Piece[][] board) {
+        return isValidKnightMove(color, board);
     }
-    @Override
-    public boolean move(char color, Piece[][] board)
-    {
-        int rowDifference = abs(getEndIndex().getRow() - getStartIndex().getRow());
-        int colDifference = abs(getEndIndex().getCol() - getStartIndex().getCol());
 
-        if ((rowDifference == Constants.DOUBLE_JUMP && colDifference == Constants.ROW_START_WHITE) || (rowDifference == Constants.ROW_START_WHITE && colDifference == Constants.DOUBLE_JUMP))
-        {
-            return eat(color, board);
+    //check just if the endpoint is valid
+    @Override
+    public boolean eat(char color, Piece[][] board) {
+        return isValidKnightMove(color, board);
+    }
+
+
+    @Override
+    public boolean inTheWay(char color, Piece[][] board) {
+        // Knights jump over everything, so the path is never "blocked"
+        return true;
+    }
+
+    /*
+    The func if the knight move is valid by geometry
+    input: color of the piece and the board
+    output: true if valid else false
+     */
+    private boolean isValidKnightMove(char color, Piece[][] board) {
+        int rowDiff = Math.abs(getEndIndex().getRow() - getStartIndex().getRow());
+        int colDiff = Math.abs(getEndIndex().getCol() - getStartIndex().getCol());
+
+        // Strict L-shape calculation
+        if ((rowDiff == 2 && colDiff == 1) || (rowDiff == 1 && colDiff == 2)) {
+
+            // Validate the final landing square
+            Piece target = board[getEndIndex().getRow()][getEndIndex().getCol()];
+            if (target == null) return true; // Empty square is valid
+            return target.getColor() != color; // Enemy square is valid, teammate blocks it
         }
-        return false;
+
+        return false; // Not a valid L-shape
     }
-
-    @Override
-    public boolean eat(char color, Piece[][] board)
-    {
-        Piece target = board[getEndIndex().getRow()][getEndIndex().getCol()];
-
-        // If the square is empty (null), the move is valid.
-        if (target == null) {
-            return true;
-        }
-
-        // If there is a piece, only move if it's the opposite color.
-        return target.getColor() != color;
-    }
-    @Override
-    public boolean inTheWay(char color, Piece[][] board)
-    {
-        return false;
-    }
-
 }

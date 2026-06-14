@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class signinPage extends AppCompatActivity implements View.OnClickListener {
 
+    //fields
     ImageButton backbtn;
 
     //firebase variables
@@ -33,6 +34,7 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
 
     FirebaseAuth auth;
 
+    //constructor
     @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
             return insets;
         });
 
+        //bind buttons and textviews
         backbtn = findViewById(R.id.backbtn);
         backbtn.setOnClickListener(this);
 
@@ -58,6 +61,7 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
         signbtn.setOnClickListener(this);
     }
 
+    //The func move to the desire activity and act by the button that got pressed
     @Override
     public void onClick(View v) {
 
@@ -65,7 +69,9 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
         {
             Intent intent = new Intent(signinPage.this,log_lobby.class);
             startActivity(intent);
+            finish();
         }
+        //make sure the strings are not empty
         if(signbtn == v)
         {
             String txt_email = emailtv.getText().toString();
@@ -78,6 +84,7 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
                 Toast.makeText(context, "password is to short",Toast.LENGTH_SHORT).show();
             }
             else {
+                //try to register
                 registerUser(txt_email, txt_password);
             }
         }
@@ -85,6 +92,12 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    /*
+    The func try to register in the auth table
+    input: email -> client desire email
+           password -> client desire password
+    output: or a new row in the auth table or toast failed
+     */
     private void registerUser(String email, String password)
     {
         auth.createUserWithEmailAndPassword(email,password)
@@ -94,7 +107,7 @@ public class signinPage extends AppCompatActivity implements View.OnClickListene
                         if(task.isSuccessful())
                         {
                             Toast.makeText(context, "success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(signinPage.this, lobby.class));
+                            startActivity(new Intent(signinPage.this, log_lobby.class));
                         }
                         else {
                             Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show();

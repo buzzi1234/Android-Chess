@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
+        android:name=".GlobalStat"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,6 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChessGame">
+        <service
+            android:name=".BackgroundMusicService"
+            android:enabled="true"
+            android:exported="false" />
         <activity
             android:name=".Splash"
             android:exported="true">
@@ -29,6 +37,11 @@
             android:name=".instructionPage"
             android:exported="false">
         </activity>
+
+        <receiver
+            android:name="com.example.chessgame.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
 
         <activity
             android:name=".lobby"
@@ -57,6 +70,11 @@
 
         <activity
             android:name=".playPage"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".GameOverDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
             android:exported="false">
         </activity>
 
